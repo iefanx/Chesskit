@@ -872,6 +872,8 @@ export default function Play() {
             backgroundColor: "#1c2124", // matches control panel background on desktop
             borderTop: "1px solid rgba(255,255,255,0.06)",
             px: 1.5,
+            minWidth: 0,
+            overflow: "hidden",
           }}
         >
           {/* Back Move arrow */}

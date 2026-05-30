@@ -620,6 +620,8 @@ export default function GameAnalysis() {
             backgroundColor: "#1c2124", // match sidebar bg on desktop
             borderTop: "1px solid rgba(255,255,255,0.06)",
             px: 1.5,
+            minWidth: 0,
+            overflow: "hidden",
           }}
         >
           {/* Back Move arrow */}
