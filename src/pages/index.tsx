@@ -24,10 +24,9 @@ import { useAtom } from "jotai";
 import { useEffect, useState, useMemo } from "react";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/router";
-import { usePlayersData } from "@/hooks/usePlayersData";
 import { useChessActions } from "@/hooks/useChessActions";
 import { useEngine } from "@/hooks/useEngine";
-import { getEvaluationBarValue, setGameHeaders, uciMoveParams, moveLineUciToSan } from "@/lib/chess";
+import { getEvaluationBarValue, setGameHeaders, moveLineUciToSan } from "@/lib/chess";
 import { Color, EngineName } from "@/types/enums";
 import { useGameDatabase } from "@/hooks/useGameDatabase";
 import { openings } from "@/data/openings";
@@ -44,21 +43,18 @@ export default function Play() {
   const [engineName, setEngineName] = useAtom(enginePlayNameAtom);
   const engine = useEngine(engineName);
   
-  const [gameData, setGameData] = useAtom(gameDataAtom);
-  const [hintArrow, setHintArrow] = useAtom(hintArrowAtom);
+  const [, setGameData] = useAtom(gameDataAtom);
+  const [, setHintArrow] = useAtom(hintArrowAtom);
   const [historyIndex, setHistoryIndex] = useAtom(historyIndexAtom);
   const { addGame } = useGameDatabase();
 
   const { goToMove, undoMove } = useChessActions(gameAtom);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [isCalculatingHint, setIsCalculatingHint] = useState(false);
+  const [, setIsCalculatingHint] = useState(false);
   const [boardSize, setBoardSize] = useState(360);
 
   const gameFen = game.fen();
-  const { white, black } = usePlayersData(gameAtom);
-  const opponent = playerColor === Color.White ? black : white;
-  const user = playerColor === Color.White ? white : black;
 
   // Evaluation history and display states
   const [evalsHistory, setEvalsHistory] = useAtom(evalsHistoryAtom);
@@ -465,7 +461,7 @@ export default function Play() {
           const isSelected = historyIndexValue === -1 ? idx === history.length - 1 : historyIndexValue === idx;
 
           return (
-            <Stack key={idx} direction="row" alignItems="center" spacing={0.5} shrink={0}>
+            <Stack key={idx} direction="row" alignItems="center" spacing={0.5} sx={{ flexShrink: 0 }}>
               {isWhite && (
                 <Typography
                   variant="body2"

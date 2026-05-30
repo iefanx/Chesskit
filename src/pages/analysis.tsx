@@ -48,7 +48,7 @@ export default function GameAnalysis() {
   const [gameEval, setEval] = useAtom(gameEvalAtom);
   const [boardOrientation, setBoardOrientation] = useAtom(boardOrientationAtom);
   const showBestMoveArrow = useAtomValue(showBestMoveArrowAtom);
-  const showPlayerMoveIcon = useAtomValue(showPlayerMoveIconAtom);
+
 
   const engineName = useAtomValue(engineNameAtom);
   const engine = useEngine(engineName);
@@ -309,7 +309,7 @@ export default function GameAnalysis() {
           const isSelected = boardHistory.length - 1 === idx;
 
           return (
-            <Stack key={idx} direction="row" alignItems="center" spacing={0.5} shrink={0}>
+            <Stack key={idx} direction="row" alignItems="center" spacing={0.5} sx={{ flexShrink: 0 }}>
               {isWhite && (
                 <Typography
                   variant="body2"
