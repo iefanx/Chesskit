@@ -39,6 +39,7 @@ import { CLASSIFICATION_COLORS } from "@/constants";
 import LoadGame from "@/sections/analysis/panelHeader/loadGame";
 import { logAnalyticsEvent } from "@/lib/firebase";
 import { SavedEvals } from "@/types/eval";
+import { Haptics } from "@/lib/haptics";
 
 export default function GameAnalysis() {
   const router = useRouter();
@@ -319,7 +320,7 @@ export default function GameAnalysis() {
                 </Typography>
               )}
               <Box
-                onClick={() => handleJumpToMove(idx)}
+                onClick={() => { Haptics.light(); handleJumpToMove(idx); }}
                 sx={{
                   px: 1,
                   py: 0.25,
@@ -378,7 +379,7 @@ export default function GameAnalysis() {
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <IconButton onClick={() => router.push("/")} color="inherit" size="small">
+        <IconButton onClick={() => { Haptics.light(); router.push("/"); }} color="inherit" size="small">
           <Icon icon="mdi:chevron-left" width={28} height={28} />
         </IconButton>
 
@@ -389,7 +390,7 @@ export default function GameAnalysis() {
           </Typography>
         </Stack>
 
-        <IconButton onClick={() => setSettingsOpen(true)} color="inherit" size="small">
+        <IconButton onClick={() => { Haptics.light(); setSettingsOpen(true); }} color="inherit" size="small">
           <Icon icon="mdi:cog" width={22} height={22} />
         </IconButton>
       </Stack>
@@ -565,7 +566,7 @@ export default function GameAnalysis() {
           {/* Back Move arrow */}
           <IconButton
             size="small"
-            onClick={handlePrevMove}
+            onClick={() => { Haptics.light(); handlePrevMove(); }}
             color="inherit"
             disabled={board.history().length === 0}
             sx={{ opacity: board.history().length === 0 ? 0.3 : 0.8 }}
@@ -581,7 +582,7 @@ export default function GameAnalysis() {
           {/* Next Move arrow */}
           <IconButton
             size="small"
-            onClick={handleNextMove}
+            onClick={() => { Haptics.light(); handleNextMove(); }}
             color="inherit"
             disabled={!isNextButtonEnabled}
             sx={{ opacity: !isNextButtonEnabled ? 0.3 : 0.8 }}
@@ -607,7 +608,7 @@ export default function GameAnalysis() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={handleFlip}
+          onClick={() => { Haptics.light(); handleFlip(); }}
           sx={{
             cursor: "pointer",
             width: 70,
@@ -626,7 +627,7 @@ export default function GameAnalysis() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={handlePrevMove}
+          onClick={() => { Haptics.light(); handlePrevMove(); }}
           sx={{
             cursor: board.history().length > 0 ? "pointer" : "default",
             width: 70,
@@ -645,7 +646,7 @@ export default function GameAnalysis() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={handleNextMove}
+          onClick={() => { Haptics.light(); handleNextMove(); }}
           sx={{
             cursor: isNextButtonEnabled ? "pointer" : "default",
             width: 70,
@@ -664,7 +665,7 @@ export default function GameAnalysis() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={() => setSettingsOpen(true)}
+          onClick={() => { Haptics.light(); setSettingsOpen(true); }}
           sx={{
             cursor: "pointer",
             width: 70,

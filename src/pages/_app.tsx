@@ -6,6 +6,7 @@ import { AppProps } from "next/app";
 import Layout from "@/sections/layout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
+import Head from "next/head";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover" />
+      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>

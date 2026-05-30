@@ -4,6 +4,7 @@ import { Player } from "@/types/game";
 import { Chess, Move, DEFAULT_POSITION } from "chess.js";
 import { PrimitiveAtom, useAtom } from "jotai";
 import { useCallback } from "react";
+import { Haptics } from "@/lib/haptics";
 
 export interface resetGameParams {
   fen?: string;
@@ -79,9 +80,22 @@ export const useChessActions = (chessAtom: PrimitiveAtom<Chess>) => {
 
         setGame(newGame);
         playSoundFromMove(result);
+
+        // Tactile Haptic Feedback depending on move context
+        if (result) {
+          if (result.san.includes("#") || result.san.includes("+")) {
+            Haptics.heavy();
+          } else if (result.captured) {
+            Haptics.medium();
+          } else {
+            Haptics.light();
+          }
+        }
+
         return result;
       } catch {
         playIllegalMoveSound();
+        Haptics.error();
         return null;
       }
     },
@@ -107,6 +121,7 @@ export const useChessActions = (chessAtom: PrimitiveAtom<Chess>) => {
     const move = newGame.undo();
     if (move) playSoundFromMove(move);
     setGame(newGame);
+    Haptics.light();
   }, [copyGame, setGame]);
 
   const goToMove = useCallback(
@@ -126,6 +141,7 @@ export const useChessActions = (chessAtom: PrimitiveAtom<Chess>) => {
 
       setGame(newGame);
       playSoundFromMove(lastMove);
+      Haptics.light();
     },
     [setGame]
   );

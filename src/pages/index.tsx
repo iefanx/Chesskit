@@ -33,6 +33,7 @@ import { useGameDatabase } from "@/hooks/useGameDatabase";
 import { openings } from "@/data/openings";
 import { getPositionWinPercentage } from "@/lib/engine/helpers/winPercentage";
 import { Chess } from "chess.js";
+import { Haptics } from "@/lib/haptics";
 
 export default function Play() {
   const router = useRouter();
@@ -475,7 +476,7 @@ export default function Play() {
                 </Typography>
               )}
               <Box
-                onClick={() => setHistoryIndex(idx)}
+                onClick={() => { Haptics.light(); setHistoryIndex(idx); }}
                 sx={{
                   px: 1,
                   py: 0.25,
@@ -533,7 +534,7 @@ export default function Play() {
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}
       >
-        <IconButton onClick={() => router.push("/database")} color="inherit" size="small">
+        <IconButton onClick={() => { Haptics.light(); router.push("/database"); }} color="inherit" size="small">
           <Icon icon="mdi:database" width={24} height={24} />
         </IconButton>
 
@@ -544,7 +545,7 @@ export default function Play() {
           </Typography>
         </Stack>
 
-        <IconButton onClick={handleOptions} color="inherit" size="small">
+        <IconButton onClick={() => { Haptics.light(); handleOptions(); }} color="inherit" size="small">
           <Icon icon="mdi:cog" width={22} height={22} />
         </IconButton>
       </Stack>
@@ -721,7 +722,7 @@ export default function Play() {
                 </Stack>
                 <Button
                   variant="contained"
-                  onClick={handleOptions}
+                  onClick={() => { Haptics.light(); handleOptions(); }}
                   sx={{
                     backgroundColor: "#81b64c",
                     color: "#fff",
@@ -767,7 +768,7 @@ export default function Play() {
                 <Stack spacing={1.5} width="100%">
                   <Button
                     variant="contained"
-                    onClick={handleOpenGameAnalysis}
+                    onClick={() => { Haptics.light(); handleOpenGameAnalysis(); }}
                     sx={{
                       backgroundColor: "#81b64c",
                       color: "#fff",
@@ -785,7 +786,7 @@ export default function Play() {
                   </Button>
                   <Button
                     variant="outlined"
-                    onClick={handleOptions}
+                    onClick={() => { Haptics.light(); handleOptions(); }}
                     sx={{
                       borderColor: "rgba(255,255,255,0.2)",
                       color: "#fff",
@@ -823,7 +824,7 @@ export default function Play() {
           {/* Back Move arrow */}
           <IconButton
             size="small"
-            onClick={handlePrevMove}
+            onClick={() => { Haptics.light(); handlePrevMove(); }}
             color="inherit"
             disabled={historyIndexValue === 0}
             sx={{ opacity: historyIndexValue === 0 ? 0.3 : 0.8 }}
@@ -839,7 +840,7 @@ export default function Play() {
           {/* Next Move arrow */}
           <IconButton
             size="small"
-            onClick={handleNextMove}
+            onClick={() => { Haptics.light(); handleNextMove(); }}
             color="inherit"
             disabled={historyIndexValue === -1}
             sx={{ opacity: historyIndexValue === -1 ? 0.3 : 0.8 }}
@@ -865,7 +866,7 @@ export default function Play() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={handleOptions}
+          onClick={() => { Haptics.light(); handleOptions(); }}
           sx={{
             cursor: "pointer",
             width: 70,
@@ -884,7 +885,7 @@ export default function Play() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={handleResign}
+          onClick={() => { Haptics.light(); handleResign(); }}
           sx={{
             cursor: isGameInProgress ? "pointer" : "default",
             width: 70,
@@ -903,7 +904,7 @@ export default function Play() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={handleHint}
+          onClick={() => { Haptics.light(); handleHint(); }}
           sx={{
             cursor: isGameInProgress && game.turn() === playerColor ? "pointer" : "default",
             width: 70,
@@ -922,7 +923,7 @@ export default function Play() {
         <Stack
           spacing={0.5}
           alignItems="center"
-          onClick={handleUndo}
+          onClick={() => { Haptics.light(); handleUndo(); }}
           sx={{
             cursor: game.history().length > 0 ? "pointer" : "default",
             width: 70,
