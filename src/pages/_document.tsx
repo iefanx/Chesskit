@@ -33,9 +33,9 @@ export default function Document() {
         />
 
         {/* OG (Social networks) */}
-        <meta property="og:title" content="chesskit.org" />
+        <meta property="og:title" content="Chessmate Everywhere" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="chesskit.org" />
+        <meta property="og:site_name" content="Chessmate Everywhere" />
         <meta property="og:url" content="https://chesskit.org/" />
         <meta
           property="og:image"
@@ -47,7 +47,7 @@ export default function Document() {
         />
 
         {/* Twitter */}
-        <meta name="twitter:title" content="chesskit.org" />
+        <meta name="twitter:title" content="Chessmate Everywhere" />
         <meta name="twitter:domain" content="chesskit.org" />
         <meta name="twitter:url" content="https://chesskit.org/" />
         <meta

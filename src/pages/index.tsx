@@ -523,7 +523,7 @@ export default function Play() {
         fontFamily: "'Inter', 'Roboto', sans-serif",
       }}
     >
-      <PageTitle title="Chesskit Mobile Play" />
+      <PageTitle title="Chessmate Everywhere" />
 
       {/* 1. TOP HEADER BAR */}
       <Stack
@@ -545,7 +545,7 @@ export default function Play() {
         <Stack direction="row" alignItems="center" spacing={1.5}>
           <Icon icon="fa6-solid:chess-pawn" color="#81b64c" width={22} height={22} />
           <Typography variant="subtitle1" sx={{ fontWeight: 800, letterSpacing: 0.5 }}>
-            Chesskit
+            Chessmate Everywhere
           </Typography>
         </Stack>
 

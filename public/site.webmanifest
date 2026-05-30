@@ -1,6 +1,6 @@
 {
-  "name": "Chesskit",
-  "short_name": "Chesskit",
+  "name": "Chessmate Everywhere",
+  "short_name": "Chessmate",
   "description": "Play and analyze your chess games locally with Stockfish!",
   "icons": [
     {
