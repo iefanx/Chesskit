@@ -371,7 +371,7 @@ export default function GameAnalysis() {
         fontFamily: "'Inter', 'Roboto', sans-serif",
       }}
     >
-      <PageTitle title="Chessmate Everywhere Analysis" />
+      <PageTitle title="Chessmate Analysis" />
       <LoadGame />
 
       {/* 1. TOP HEADER BAR */}

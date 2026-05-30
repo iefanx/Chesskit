@@ -178,7 +178,7 @@ export default function GameDatabase() {
       gap={4}
       marginTop={6}
     >
-      <PageTitle title="Chessmate Everywhere Database" />
+      <PageTitle title="Chessmate Database" />
 
       <Grid container justifyContent="center" alignItems="center" size={12}>
         <LoadGameButton />
