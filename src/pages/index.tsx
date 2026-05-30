@@ -75,15 +75,22 @@ export default function Play() {
     return tempChess.fen();
   }, [game, gameFen, historyIndexValue]);
 
-  // Responsive board sizing calculation to fit perfectly on any phone screen (100vh / 100dvh)
+  // Responsive board sizing calculation to fit perfectly on any screen
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
+      const isDesktop = width >= 900;
       
-      // Calculate remaining height dynamically. Non-board elements take ~330px
-      const calculatedSize = Math.min(width - 16, height - 330);
-      setBoardSize(Math.max(calculatedSize, 200));
+      if (isDesktop) {
+        // Desktop: Left side has 60% width, board vertically fits within height - 140
+        const calculatedSize = Math.min(width * 0.6 - 32, height - 140);
+        setBoardSize(Math.max(calculatedSize, 300));
+      } else {
+        // Mobile: Stacked, board vertically fits within height - 330
+        const calculatedSize = Math.min(width - 16, height - 330);
+        setBoardSize(Math.max(calculatedSize, 200));
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -508,7 +515,7 @@ export default function Play() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
+        height: "100dvh",
         width: "100vw",
         backgroundColor: "#262d31", // Premium dark slate color matching Chess.com app
         color: "#fff",
@@ -524,7 +531,8 @@ export default function Play() {
         justifyContent="space-between"
         alignItems="center"
         sx={{
-          height: 48,
+          height: "calc(48px + env(safe-area-inset-top, 0px))",
+          pt: "env(safe-area-inset-top, 0px)",
           px: 2,
           backgroundColor: "#21272b",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
@@ -546,10 +554,44 @@ export default function Play() {
         </IconButton>
       </Stack>
 
+      {/* MAIN CONTAINER: RESPONSIVE SPLIT GRID LAYOUT */}
+      <Box
+        sx={{
+          flex: 1,
+          display: "grid",
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          gridTemplateColumns: { xs: "1fr", md: "6fr 4fr" },
+          gridTemplateRows: {
+            xs: "auto auto 1fr auto calc(64px + env(safe-area-inset-bottom, 0px))",
+            md: "auto auto 1fr auto calc(64px + env(safe-area-inset-bottom, 0px))",
+          },
+          gridTemplateAreas: {
+            xs: `
+              "eval"
+              "classify"
+              "board"
+              "moves"
+              "buttons"
+            `,
+            md: `
+              "board eval"
+              "board classify"
+              "board spacer"
+              "board moves"
+              "board buttons"
+            `,
+          },
+          backgroundColor: "#262d31",
+        }}
+      >
+
       {/* 2. HORIZONTAL EVALUATION PROGRESS BAR */}
       {(isGameInProgress || game.history().length > 0) && (
         <Box
           sx={{
+            gridArea: "eval",
             height: 14,
             width: "100%",
             backgroundColor: "#312e2b", // Dark side (Black advantage)
@@ -616,6 +658,7 @@ export default function Play() {
           justifyContent="space-between"
           alignItems="center"
           sx={{
+            gridArea: "classify",
             height: 28,
             backgroundColor: "#1c2124",
             px: 2,
@@ -660,13 +703,17 @@ export default function Play() {
       {/* 5. CHESSBOARD AND OVERLAYS WRAPPER */}
       <Box
         sx={{
-          flex: 1,
+          gridArea: "board",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
           px: 1,
+          py: { xs: 0, md: 2 },
+          height: "100%",
+          overflow: "hidden",
+          borderRight: { xs: "none", md: "1px solid rgba(255,255,255,0.06)" },
         }}
       >
         {/* Play board container sized exactly */}
@@ -805,14 +852,24 @@ export default function Play() {
         )}
       </Box>
 
+      {/* DESKTOP SIDEBAR SPACER */}
+      <Box
+        sx={{
+          gridArea: "spacer",
+          display: { xs: "none", md: "block" },
+          backgroundColor: "#1c2124",
+        }}
+      />
+
       {/* 6. MOVES HISTORY & NAVIGATION CONTROLS */}
       {game.history().length > 0 && (
         <Stack
           direction="row"
           alignItems="center"
           sx={{
+            gridArea: "moves",
             height: 38,
-            backgroundColor: "#21272b",
+            backgroundColor: "#1c2124", // matches control panel background on desktop
             borderTop: "1px solid rgba(255,255,255,0.06)",
             px: 1.5,
           }}
@@ -852,10 +909,12 @@ export default function Play() {
         justifyContent="space-around"
         alignItems="center"
         sx={{
-          height: 64,
+          gridArea: "buttons",
+          height: "calc(64px + env(safe-area-inset-bottom, 0px))",
+          pt: 1,
+          pb: "env(safe-area-inset-bottom, 0px)",
           backgroundColor: "#1c2124",
           borderTop: "1px solid rgba(255,255,255,0.06)",
-          pb: "env(safe-area-inset-bottom)", // modern mobile safe area optimization
         }}
       >
         {/* Button Options */}
@@ -934,6 +993,8 @@ export default function Play() {
           </Typography>
         </Stack>
       </Stack>
+
+      </Box> {/* END MAIN RESPONSIVE GRID CONTAINER */}
 
       {/* SETTINGS PARAMETERS DIALOG */}
       <GameSettingsDialog open={settingsOpen} onClose={() => setSettingsOpen(false)} />
